@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset=UTF8 />
+    <title>QR</title>
+    <script type="text/javascript" src="qrcode.js"></script>
+    <script type="text/javascript" src="jquery-1.5.2.min.js"></script>
+    <script type="text/javascript" src="excanvas.compiled.js"></script>
+    <style type="text/css">
+        select {
+            display: block;
+        }
+        input[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            font-size: 400%;
+        }
+    </style>
+</head>
+<body>
+    <h1>QR</h1>
+    <canvas id="canvas"></canvas>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div id="container"></div>
+
+    <form id="QRForm">
+        <select id="level">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="9">9</option>
+            <option value="10" selected="selected">10</option>
+        </select>
+        <textarea id="text" rows="3" cols="80">TEST!</textarea>
+        <input type="submit" value="Render" />
+    </form>
+
+    <footer>
+        Powered by <a href="http://www.d-project.com/qrcode/index.html">www.d-project.com</a>,
+        <a href="http://jquery.com/">jQuery</a>
+    </footer>
+
+    <script type="text/javascript">
+        $(function () {
+            function stopwatch(msg, code) {
+                var d1 = (new Date());
+                code();
+                var d2 = (new Date());
+                console.log(msg + ' : '+(d2 - d1)+'ms');
+            }
+
+            function createQR() {
+                var level = parseInt($('#level').val(), 10),
+                    errLevel = QRErrorCorrectLevel.H,
+                    qr = new QRCode(level, errLevel)
+                    ;
+                qr.addData($('#text').val());
+                qr.make();
+                return qr;
+            };
+            function drawCanvas(qr, canvas) {
+                var ctx = canvas.getContext('2d');
+                var canvas_x = 0;
+                var canvas_y = 0;
+                ctx.clearRect(0,0,qr.getModuleCount()*4,qr.getModuleCount()*4);
+                $(canvas).attr('height', qr.getModuleCount()*4);
+
+                for (var r = 0; r < qr.getModuleCount(); r++) {
+                    for (var c = 0; c < qr.getModuleCount(); c++) {
+                        if (qr.isDark(r, c) ) {
+                            ctx.fillRect(canvas_x, canvas_y, 4, 4);
+                        }
+                        canvas_x += 4;
+                    }
+                    canvas_x = 0;
+                    canvas_y += 4;
+                }
+            };
+            function drawTable(qr) {
+                var html = "<table style='border-width: 0px; border-style: none; border-color: #0000ff; border-collapse: collapse;'>";
+    
+                for (var r = 0; r < qr.getModuleCount(); r++) {
+                
+                    html += ("<tr>");
+                
+                    for (var c = 0; c < qr.getModuleCount(); c++) {
+                
+                        if (qr.isDark(r, c) ) {
+                            html += ("<td style='border-width: 0px; border-style: none; border-color: #0000ff; border-collapse: collapse; padding: 0; margin: 0; width: 6px; height: 6px; background-color: #000000;'/>");
+                        } else {
+                            html += ("<td style='border-width: 0px; border-style: none; border-color: #0000ff; border-collapse: collapse; padding: 0; margin: 0; width: 6px; height: 6px; background-color: #ffffff;'/>");
+                        }
+                
+                    }
+                
+                    html += ("</tr>");
+                
+                }
+                
+                html += ("</table>");
+
+                return html;
+            }
+
+            $('#QRForm').submit(function () {
+                var qr = createQR();
+
+                /*
+                stopwatch('table', function () {
+                    var html = drawTable(qr);
+                    $('#container').html(html);
+                });
+                */
+                stopwatch('canvas', function () {
+                    drawCanvas(qr, $('#canvas')[0]);
+                });
+
+                return false;
+            }).submit();
+        });
+    </script>
+</body>
+</html>
