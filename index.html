@@ -21,12 +21,6 @@
 <body>
     <h1>QR</h1>
     <canvas id="canvas"></canvas>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <div id="container"></div>
 
     <form id="QRForm">
         <select id="level">
@@ -112,12 +106,6 @@
             $('#QRForm').submit(function () {
                 var qr = createQR();
 
-                /*
-                stopwatch('table', function () {
-                    var html = drawTable(qr);
-                    $('#container').html(html);
-                });
-                */
                 stopwatch('canvas', function () {
                     drawCanvas(qr, $('#canvas')[0]);
                 });
