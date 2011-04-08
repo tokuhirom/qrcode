@@ -109,11 +109,11 @@
                 qr.make();
                 return qr;
             };
-            function drawCanvas(qr, canvas) {
-                var ctx = canvas.getContext('2d');
-                var canvas_x = 0;
-                var canvas_y = 0,
-                    size = qr.getModuleCount()*4;
+            function drawCanvas(qr, canvas, scale) {
+                var ctx = canvas.getContext('2d'),
+                    canvas_x = 0,
+                    canvas_y = 0,
+                    size = qr.getModuleCount()*scale;
 
                 ctx.clearRect(0,0, size,size);
                 $(canvas).attr('height', size).attr('width', size);
@@ -121,12 +121,12 @@
                 for (var r = 0; r < qr.getModuleCount(); r++) {
                     for (var c = 0; c < qr.getModuleCount(); c++) {
                         if (qr.isDark(r, c) ) {
-                            ctx.fillRect(canvas_x, canvas_y, 4, 4);
+                            ctx.fillRect(canvas_x, canvas_y, scale, scale);
                         }
-                        canvas_x += 4;
+                        canvas_x += scale;
                     }
                     canvas_x = 0;
-                    canvas_y += 4;
+                    canvas_y += scale;
                 }
             };
 
@@ -134,7 +134,7 @@
                 var qr = createQR();
 
                 stopwatch('canvas', function () {
-                    drawCanvas(qr, $('#canvas')[0]);
+                    drawCanvas(qr, $('#canvas')[0], 5);
                 });
 
                 return false;
