@@ -6,24 +6,74 @@
     <script type="text/javascript" src="qrcode.js"></script>
     <script type="text/javascript" src="jquery-1.5.2.min.js"></script>
     <script type="text/javascript" src="excanvas.compiled.js"></script>
+    <script type="text/javascript" src="xcss.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:bold' rel='stylesheet' type='text/css'>
     <style type="text/css">
+        body {
+            margin: auto;
+            max-width: 640px;
+        }
+        h1 {
+            font-family: 'Cabin Sketch', arial, serif;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 400%;
+        }
+        * {
+            font-family: 'Cabin Sketch', arial, serif;
+        }
+        form {
+            font-size: 200%;
+        }
         select {
-            display: block;
+            border-radius: 10px;
+            font-size: 120%;
+        }
+        textarea {
+            font-family: arial, serif;
         }
         input[type="submit"] {
             display: block;
             width: 100%;
-            padding: 20px;
-            font-size: 400%;
+            padding: 4px;
+            font-size: 120%;
+            margin-top: 10px;
+            border-radius: 10px;
+            font-family: 'Cabin Sketch', arial, serif;
+            background: -moz-linear-gradient(top, #fff, #F1F1F1 1%, #F1F1F1 50%, #DFDFDF 99%, #ccc);
+            background: -webkit-gradient(linear, left top, left bottom, from(#fff), color-stop(0.01, #F1F1F1), color-stop(0.5, #F1F1F1), color-stop(0.99, #DFDFDF), to(#ccc));
+        }
+        textarea {
+            width: 100%;
+            font-size: 200%;
+        }
+        #canvas-container {
+            text-align: center;
+        }
+        #canvas {
+            padding: 4px;
+            box-shadow: 3px 3px 29px #f0d0e0;
+        }
+        footer {
+            text-align: right;
+            font-size: small;
+            color: #cccccc;
+            margin-top: 40px;
+        }
+        footer a {
+            color: #dcdcdc;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <h1>QR</h1>
-    <canvas id="canvas"></canvas>
+    <h1>QR Code Generator</h1>
+    <div id="canvas-container">
+        <canvas id="canvas"></canvas>
+    </div>
 
     <form id="QRForm">
-        <select id="level">
+        <label for="level">Level:</label> <select id="level">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -31,8 +81,8 @@
             <option value="5">5</option>
             <option value="9">9</option>
             <option value="10" selected="selected">10</option>
-        </select>
-        <textarea id="text" rows="3" cols="80">TEST!</textarea>
+        </select><br />
+        <textarea id="text" rows="1" cols="80">TEST!</textarea>
         <input type="submit" value="Render" />
     </form>
 
@@ -62,9 +112,11 @@
             function drawCanvas(qr, canvas) {
                 var ctx = canvas.getContext('2d');
                 var canvas_x = 0;
-                var canvas_y = 0;
-                ctx.clearRect(0,0,qr.getModuleCount()*4,qr.getModuleCount()*4);
-                $(canvas).attr('height', qr.getModuleCount()*4);
+                var canvas_y = 0,
+                    size = qr.getModuleCount()*4;
+
+                ctx.clearRect(0,0, size,size);
+                $(canvas).attr('height', size).attr('width', size);
 
                 for (var r = 0; r < qr.getModuleCount(); r++) {
                     for (var c = 0; c < qr.getModuleCount(); c++) {
