@@ -1,5 +1,12 @@
+qrcode
+======
+
+Pure javascript qrcode rendering site using canvas.
+
+It runs on http://qrcode.64p.org/.
+
 Setup
-=====
+-----
 
     sudo ln -s `pwd`/etc/httpd/qrcode.64p.org.conf /etc/nginx/sites-enabled/qrcode.64p.org.conf
     sudo /etc/init.d/nginx reload
