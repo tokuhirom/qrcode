@@ -1,4 +1,6 @@
-"use strict";
+import React from "react";
+import ReactDOM from "react-dom";
+import QRCode from "qrcode-generator";
 
 var QrcodeForm = React.createClass({
     getInitialState: function () {
@@ -56,9 +58,7 @@ var QrcodeApp = React.createClass({
         this.drawCanvas(qr, canvas, scale);
     },
     createQr: function (level, text) {
-        var errLevel = QRErrorCorrectLevel.H,
-            qr = new QRCode(level, errLevel)
-            ;
+        var qr = new QRCode(level, 'H');
         qr.addData(text);
         qr.make();
         return qr;
@@ -70,7 +70,8 @@ var QrcodeApp = React.createClass({
             size = qr.getModuleCount() * scale;
 
         ctx.clearRect(0, 0, size, size);
-        $(canvas).attr('height', size).attr('width', size);
+        canvas.setAttribute("height", size);
+        canvas.setAttribute('width', size);
 
         for (var r = 0; r < qr.getModuleCount(); r++) {
             for (var c = 0; c < qr.getModuleCount(); c++) {

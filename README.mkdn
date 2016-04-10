@@ -4,3 +4,22 @@ qrcode
 Pure javascript qrcode rendering site using canvas.
 
 It runs on http://qrcode.64p.org/.
+
+## How do I development this site?
+
+    npm init
+    npm install --save-dev babel-loader
+    npm install --save-dev babel-core
+    npm install --save-dev babel-preset-es2015 babel-preset-react
+    npm install --save react react-dom
+    npm install --save qrcode-generator
+    npm install --save-dev webpack
+    npm install -g webpack
+    npm install -g webpack-dev-server
+
+    webpack -p
+    # -p: uglify
+
+## SEE ALSO
+
+ * https://webpack.github.io/docs/webpack-dev-server.html
