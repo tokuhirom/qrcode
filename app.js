@@ -54,7 +54,7 @@ class QrcodeForm extends React.Component {
             <br />
             <textarea id="text" rows="1" cols="80" value={this.state.text} onChange={this.handleTextChange.bind(this)}/>
             <button type="submit">Render</button>
-        </form>
+        </form>;
     }
 }
 

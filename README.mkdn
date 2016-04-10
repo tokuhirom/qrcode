@@ -20,6 +20,8 @@ It runs on http://qrcode.64p.org/.
     webpack -p
     # -p: uglify
 
+    npm install -g eslint
+
 ## SEE ALSO
 
  * https://webpack.github.io/docs/webpack-dev-server.html
