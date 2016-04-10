@@ -116,7 +116,7 @@
                 qr.addData($('#text').val());
                 qr.make();
                 return qr;
-            };
+            }
             function drawCanvas(qr, canvas, scale) {
                 var ctx = canvas.getContext('2d'),
                     canvas_x = 0,
@@ -136,7 +136,7 @@
                     canvas_x = 0;
                     canvas_y += scale;
                 }
-            };
+            }
 
             $('#QRForm').submit(function (e) {
                 e.preventDefault();
