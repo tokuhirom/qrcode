@@ -16,7 +16,9 @@
     "webpack": "^1.12.14"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --progress --colors --inline",
+    "build": "webpack -p"
   },
   "repository": {
     "type": "git",

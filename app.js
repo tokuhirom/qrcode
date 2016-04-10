@@ -26,11 +26,12 @@ var QrcodeForm = React.createClass({
         this.renderQr();
     },
     render: function () {
-        return <form id="QRForm" onSubmit={this.handleSubmit}>
+        return <form id="QRForm" onSubmit={this.handleSubmit.bind(this)}>
             <div class="levelItem">
                 <label for="level">Level:</label>
 
-                <select id="level" value={this.state.level} readOnly="true" onChange={this.handleLevelChange}>
+                <select id="level" value={this.state.level} readOnly="true"
+                        onChange={this.handleLevelChange.bind(this)}>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -44,26 +45,33 @@ var QrcodeForm = React.createClass({
                 </select>
             </div>
             <br />
-            <textarea id="text" rows="1" cols="80" value={this.state.text} onChange={this.handleTextChange}/>
+            <textarea id="text" rows="1" cols="80" value={this.state.text} onChange={this.handleTextChange.bind(this)}/>
             <button type="submit">Render</button>
         </form>
     }
 });
 
-var QrcodeApp = React.createClass({
-    handleFormSubmit: function (level, text) {
+class QrcodeApp extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    handleFormSubmit(level, text) {
+        console.log(this);
         var qr = this.createQr(level, text);
         var scale = 5;
         var canvas = document.getElementById('canvas');
         this.drawCanvas(qr, canvas, scale);
-    },
-    createQr: function (level, text) {
+    }
+
+    createQr(level, text) {
         var qr = new QRCode(level, 'H');
         qr.addData(text);
         qr.make();
         return qr;
-    },
-    drawCanvas: function (qr, canvas, scale) {
+    }
+
+    drawCanvas(qr, canvas, scale) {
         var ctx = canvas.getContext('2d'),
             canvas_x = 0,
             canvas_y = 0,
@@ -77,22 +85,23 @@ var QrcodeApp = React.createClass({
             for (var c = 0; c < qr.getModuleCount(); c++) {
                 if (qr.isDark(r, c)) {
                     ctx.fillRect(canvas_x, canvas_y, scale, scale);
-                }
+            }
                 canvas_x += scale;
             }
             canvas_x = 0;
             canvas_y += scale;
         }
-    },
-    render: function () {
+    }
+
+    render() {
         return <div>
             <div id="canvas-container">
                 <canvas id="canvas"/>
             </div>
-            <QrcodeForm onFormSubmit={this.handleFormSubmit}/>
+            <QrcodeForm onFormSubmit={this.handleFormSubmit.bind(this)}/>
         </div>;
     }
-});
+}
 
 ReactDOM.render(
     <QrcodeApp/>,
