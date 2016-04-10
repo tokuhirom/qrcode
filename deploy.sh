@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
-npm install -g webpack
 npm install
-webpack -p
+./node_modules/.bin/webpack -p
