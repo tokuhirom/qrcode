@@ -2,3 +2,4 @@
 *.iml
 /htdocs/bundle.js
 /htdocs/bundle.js.map
+/node_modules/
