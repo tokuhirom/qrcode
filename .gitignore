@@ -1,5 +1,4 @@
 /.idea/
 *.iml
-/node_modules/
 /htdocs/bundle.js
 /htdocs/bundle.js.map
