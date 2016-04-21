@@ -1,20 +1,47 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset=UTF8 />
+    <meta charset=UTF8/>
     <title>QR</title>
     <link href="css/main.css" rel="stylesheet"/>
 </head>
 <body>
-    <h1>QR Code Generator</h1>
+<h1>QR Code Generator</h1>
 
-    <div id="content">Loading...</div>
+<div id="content">
+    <div id="canvas-container">
+        <canvas id="canvas"/>
+    </div>
 
-    <footer>
-        Powered by <a href="http://www.d-project.com/qrcode/index.html">www.d-project.com</a>,
-        <a href="http://jquery.com/">jQuery</a>
-    </footer>
+    <form id="QRForm">
+        <div class="levelItem">
+            <label for="level">Level:</label>
 
-    <script type="text/javascript" src="bundle.js"></script>
+            <select id="level">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5" selected>5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+        <br/>
+        <textarea id="text" rows="1" cols="80">http://64p.org/</textarea>
+        <button type="submit">Render</button>
+    </form>
+</div>
+
+<footer>
+    Powered by <a href="http://www.d-project.com/qrcode/index.html">www.d-project.com</a>,
+    <a href="http://jquery.com/">jQuery</a>
+</footer>
+
+<script type="text/javascript" src="js/qrcode.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
 </body>
 </html>
