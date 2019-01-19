@@ -40,7 +40,12 @@ document.addEventListener("DOMContentLoaded", function () {
         e.stopPropagation();
         e.preventDefault();
 
-        renderQRCode();
+        try {
+            renderQRCode();
+        } catch (e) {
+            console.log(e);
+            alert(e);
+        }
     }, false);
 
     renderQRCode();
